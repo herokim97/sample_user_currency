@@ -1,21 +1,44 @@
-# 환전 요청 프로그램
+# 제목 : 환전 요청 프로그램
 
-### 한국 원을 기준으로 특정 통화 환전이 가능한 프로그램
+### Description 
+ - 한국 원을 기준으로 특정 통화 환전이 가능한 프로그램
+ - 사용기술
+    1) Restful API
+    2) jpql
+    3) GlobalExceptionHandler
+ - 추가적으로 로그인 기능과 해당 사용자의 계좌 테이블을 추가하여, 잔고를 관리하는 부분을 구현 목표.
 
-## 기능
-### 1. 사용자 테이블, 환전 테이블 등록, 사용자 삭제
-####  * 이름, 이메일 등록
-####  * 통화 이름, 환율, 상징 등록
-####  * 사용자 삭제 시, userId를 외래키로 가진 테이블의 데이터도 모두 삭제
-----
-### 2. 환전 요청
-#### * 요청 userId, 한국 돈, CurrencyId 입력 시, 환전 요청 전송(status = "normal") - default
-----
-### 3. 특정 사용자 환전 요청 건 조회
-#### * userId 조회 시, 해당 사용자의 환전 요청 데이터 모두 조회
-----
-### 4. 특정 환전 상태 값 수정
-#### * exchangeId를 기준으로 해당 status의 값을 "normal" -> "cancel"로 수정함.
+### Install Process
+**- build.gradle**
+  1) JavaLanguageVersion = 17
+  2) dependecies
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+**- application.properties**
+  1) hibernate, mySQL 설정 진행.
+  2) CurrencyUserApplication - 실행
+
+### Use Process - 형식 : .json
+  1) 요청 사용자 생성(id, name, email)
+  2) 환율 테이블 통화 등록(currencyName, exchangeRate, symbol)
+  3) 환전 요청(userId, amountInKrw, toCurrencyId)
+  4) 특정 사용자 환전 건수 조회(/exchanges?userId={userId})
+  5) 특정 환전 건 상태 값 변경(status : "cancle")
+  6) 사용자 삭제(users/{userId})
+  7) 특정 사용자 환전 요청 건수 조회(/exchanges/count?userId={userId})
+
+### 프로젝트 기여자
+1. 기획 : 김영웅
+2. 개발 : 김영웅, 박진상, 박성원
+3. 검토 : 황석규
+4. gitHub 관리 : 김영웅
 
 ## ERD
 ![image](https://github.com/user-attachments/assets/07dc41b7-6dd3-4047-9e3b-fdd77ebd91aa)
