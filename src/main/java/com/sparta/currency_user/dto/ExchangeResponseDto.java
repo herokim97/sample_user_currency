@@ -43,9 +43,8 @@ public class ExchangeResponseDto {
     }
 
     private String formatAmountAfterExchange() {
-        return String.format("%s %s", amountAfterExchange,symbol);
+        return String.format("%s %s", amountAfterExchange, symbol);
     }
-
 
 
 }

@@ -30,8 +30,6 @@ public class Exchange extends BaseEntity {
     private String status = "normal";
 
 
-
-
     public Exchange(User userId, Currency toCurrencyId, BigDecimal amountInKrw, BigDecimal amountAfterExchange, BigDecimal exchangeRate) {
         this.userId = userId;
         this.toCurrencyId = toCurrencyId;

@@ -10,21 +10,14 @@ import com.sparta.currency_user.entity.User;
 import com.sparta.currency_user.repository.CurrencyRepository;
 import com.sparta.currency_user.repository.ExchangeRepository;
 import com.sparta.currency_user.repository.UserRepository;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.math.MathContext;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
