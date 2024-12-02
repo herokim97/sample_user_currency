@@ -18,23 +18,34 @@ public class ExchangeResponseDto {
     private BigDecimal exchangeRate;
 
     //환전 후 비용(달러)
-    private BigDecimal amountAfterExchange;
+    private String amountAfterExchange;
 
     private String status;
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
+    private String symbol;
+
+    private String formattedAmountAfterExchange;
+
 
     public ExchangeResponseDto(Exchange exchange) {
         this.id = exchange.getId();
         this.amountInKrw = exchange.getAmountInKrw();
         this.exchangeRate = exchange.getExchangeRate();
-        this.amountAfterExchange = exchange.getAmountAfterExchange();
+        this.amountAfterExchange = exchange.getAmountAfterExchange().toPlainString();
         this.createdAt = exchange.getCreatedAt();
         this.modifiedAt = exchange.getModifiedAt();
         this.status = exchange.getStatus();
+        this.symbol = exchange.getToCurrencyId().getSymbol();
+        this.formattedAmountAfterExchange = formatAmountAfterExchange();
     }
+
+    private String formatAmountAfterExchange() {
+        return String.format("%s %s", amountAfterExchange,symbol);
+    }
+
 
 
 }

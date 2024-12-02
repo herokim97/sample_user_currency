@@ -16,6 +16,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import java.math.MathContext;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -44,7 +45,7 @@ public class ExchangeService {
         Currency findCurrency = currencyRepository.findById(exchangeRequestDto.getToCurrencyId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "요청하신 통화가 없습니다."));
 
         //환전 후 값
-        BigDecimal amountAfterExchange = exchangeRequestDto.getAmountInKrw().divide(findCurrency.getExchangeRate(), 2);
+        BigDecimal amountAfterExchange = exchangeRequestDto.getAmountInKrw().divide(findCurrency.getExchangeRate(), new MathContext(4));
 
         //요청한 사용자
         User findUser = userRepository.findById(exchangeRequestDto.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "요청하신 사용자가 없습니다."));
@@ -83,11 +84,7 @@ public class ExchangeService {
     @Transactional
     public UserTotalExchangeResponseDto totalCount(Long userId) {
 
-        UserTotalExchangeResponseDto result = exchangeRepository.findTotalAmountInKrw(userId);
-//        int totalCount = (int) result[0];
-//        BigDecimal totalAmount = (BigDecimal) result[1];
-
-        return result;
+        return exchangeRepository.findTotalAmountInKrw(userId);
 
     }
 
