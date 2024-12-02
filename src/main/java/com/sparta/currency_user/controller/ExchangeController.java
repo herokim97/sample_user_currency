@@ -2,6 +2,7 @@ package com.sparta.currency_user.controller;
 
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
+import com.sparta.currency_user.dto.UserTotalExchangeResponseDto;
 import com.sparta.currency_user.service.ExchangeService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/exchange")
+@RequestMapping("/exchanges")
 public class ExchangeController {
     private final ExchangeService exchangeService;
 
@@ -30,8 +31,8 @@ public class ExchangeController {
     }
 
     //Read
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ExchangeResponseDto>> getExchangeByUserId(@PathVariable Long userId) {
+    @GetMapping
+    public ResponseEntity<List<ExchangeResponseDto>> getExchangeByUserId(@RequestParam Long userId) {
         return ResponseEntity.ok().body(exchangeService.getExchangeById(userId));
     }
 
@@ -41,8 +42,18 @@ public class ExchangeController {
                                                               @RequestBody ExchangeRequestDto exchangeRequestDto) {
 
         ExchangeResponseDto responseDto = exchangeService.update(exchangeRequestDto, id);
+
         return ResponseEntity.ok().body(responseDto);
 
+    }
+
+    //userRequestCount
+    @GetMapping("/count")
+    public ResponseEntity<UserTotalExchangeResponseDto> countExchangeByUserId(@RequestParam Long userId) {
+
+        UserTotalExchangeResponseDto totalExchangeResponseDto = exchangeService.totalCount(userId);
+
+        return ResponseEntity.ok().body(totalExchangeResponseDto);
     }
 
 }

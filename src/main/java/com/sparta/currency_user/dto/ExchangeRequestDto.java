@@ -34,5 +34,6 @@ public class ExchangeRequestDto {
         this.amountInKrw = amountInKrw;
         this.toCurrencyId = toCurrencyId;
     }
+
 }
 

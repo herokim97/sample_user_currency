@@ -3,25 +3,21 @@ package com.sparta.currency_user.service;
 
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
+import com.sparta.currency_user.dto.UserTotalExchangeResponseDto;
 import com.sparta.currency_user.entity.Currency;
 import com.sparta.currency_user.entity.Exchange;
 import com.sparta.currency_user.entity.User;
 import com.sparta.currency_user.repository.CurrencyRepository;
 import com.sparta.currency_user.repository.ExchangeRepository;
 import com.sparta.currency_user.repository.UserRepository;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.math.MathContext;
 import java.util.stream.Collectors;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.math.BigDecimal;
@@ -42,7 +38,7 @@ public class ExchangeService {
         Currency findCurrency = currencyRepository.findById(exchangeRequestDto.getToCurrencyId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "요청하신 통화가 없습니다."));
 
         //환전 후 값
-        BigDecimal amountAfterExchange = exchangeRequestDto.getAmountInKrw().divide(findCurrency.getExchangeRate(), 2);
+        BigDecimal amountAfterExchange = exchangeRequestDto.getAmountInKrw().divide(findCurrency.getExchangeRate(), new MathContext(4));
 
         //요청한 사용자
         User findUser = userRepository.findById(exchangeRequestDto.getUserId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "요청하신 사용자가 없습니다."));
@@ -75,6 +71,14 @@ public class ExchangeService {
         exchange.setStatus(exchangeRequestDto.getStatus());
 
         return new ExchangeResponseDto(exchange);
+    }
+
+    //사용자 별, 환전 요청 조회
+    @Transactional
+    public UserTotalExchangeResponseDto totalCount(Long userId) {
+
+        return exchangeRepository.findTotalAmountInKrw(userId);
+
     }
 
 
