@@ -3,12 +3,14 @@ package com.sparta.currency_user.service;
 
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
+import com.sparta.currency_user.dto.UserTotalExchangeResponseDto;
 import com.sparta.currency_user.entity.Currency;
 import com.sparta.currency_user.entity.Exchange;
 import com.sparta.currency_user.entity.User;
 import com.sparta.currency_user.repository.CurrencyRepository;
 import com.sparta.currency_user.repository.ExchangeRepository;
 import com.sparta.currency_user.repository.UserRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +77,18 @@ public class ExchangeService {
         exchange.setStatus(exchangeRequestDto.getStatus());
 
         return new ExchangeResponseDto(exchange);
+    }
+
+    //사용자 별, 환전 요청 조회
+    @Transactional
+    public UserTotalExchangeResponseDto totalCount(Long userId) {
+
+        UserTotalExchangeResponseDto result = exchangeRepository.findTotalAmountInKrw(userId);
+//        int totalCount = (int) result[0];
+//        BigDecimal totalAmount = (BigDecimal) result[1];
+
+        return result;
+
     }
 
 

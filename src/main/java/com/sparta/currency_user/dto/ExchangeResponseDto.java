@@ -34,7 +34,7 @@ public class ExchangeResponseDto {
         this.createdAt = exchange.getCreatedAt();
         this.modifiedAt = exchange.getModifiedAt();
         this.status = exchange.getStatus();
-
     }
+
 
 }

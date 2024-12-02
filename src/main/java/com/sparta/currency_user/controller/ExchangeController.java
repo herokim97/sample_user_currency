@@ -2,6 +2,7 @@ package com.sparta.currency_user.controller;
 
 import com.sparta.currency_user.dto.ExchangeRequestDto;
 import com.sparta.currency_user.dto.ExchangeResponseDto;
+import com.sparta.currency_user.dto.UserTotalExchangeResponseDto;
 import com.sparta.currency_user.service.ExchangeService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,15 @@ public class ExchangeController {
         ExchangeResponseDto responseDto = exchangeService.update(exchangeRequestDto, id);
         return ResponseEntity.ok().body(responseDto);
 
+    }
+
+    //userRequestCount
+    @GetMapping("/user/count/{userId}")
+    public ResponseEntity<UserTotalExchangeResponseDto> countExchangeByUserId(@PathVariable Long userId) {
+
+        UserTotalExchangeResponseDto totalExchangeResponseDto = exchangeService.totalCount(userId);
+
+        return ResponseEntity.ok().body(totalExchangeResponseDto);
     }
 
 }
