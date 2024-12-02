@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/exchange")
+@RequestMapping("/exchanges")
 public class ExchangeController {
     private final ExchangeService exchangeService;
 
@@ -31,8 +31,8 @@ public class ExchangeController {
     }
 
     //Read
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ExchangeResponseDto>> getExchangeByUserId(@PathVariable Long userId) {
+    @GetMapping
+    public ResponseEntity<List<ExchangeResponseDto>> getExchangeByUserId(@RequestParam Long userId) {
         return ResponseEntity.ok().body(exchangeService.getExchangeById(userId));
     }
 
@@ -42,13 +42,14 @@ public class ExchangeController {
                                                               @RequestBody ExchangeRequestDto exchangeRequestDto) {
 
         ExchangeResponseDto responseDto = exchangeService.update(exchangeRequestDto, id);
+
         return ResponseEntity.ok().body(responseDto);
 
     }
 
     //userRequestCount
-    @GetMapping("/user/count/{userId}")
-    public ResponseEntity<UserTotalExchangeResponseDto> countExchangeByUserId(@PathVariable Long userId) {
+    @GetMapping("/count")
+    public ResponseEntity<UserTotalExchangeResponseDto> countExchangeByUserId(@RequestParam Long userId) {
 
         UserTotalExchangeResponseDto totalExchangeResponseDto = exchangeService.totalCount(userId);
 

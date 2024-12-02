@@ -27,10 +27,6 @@ public class Exchange extends BaseEntity {
 
     private BigDecimal exchangeRate;
 
-    private int count;
-
-    private BigDecimal totalAmountInKrw;
-
     private String status = "normal";
 
 
@@ -49,11 +45,5 @@ public class Exchange extends BaseEntity {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Exchange(User userId, int count, BigDecimal totalAmountInKrw) {
-        this.userId = userId;
-        this.count = count;
-        this.totalAmountInKrw = totalAmountInKrw;
     }
 }
