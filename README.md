@@ -8,6 +8,8 @@
     3) GlobalExceptionHandler
  - 추가적으로 로그인 기능과 해당 사용자의 계좌 테이블을 추가하여, 잔고를 관리하는 부분을 구현 목표.
 
+----
+
 ### Install Process
 **- build.gradle**
   1) JavaLanguageVersion = 17
@@ -25,6 +27,8 @@
   1) hibernate, mySQL 설정 진행.
   2) CurrencyUserApplication - 실행
 
+---
+
 ### Use Process - 형식 : .json
   1) 요청 사용자 생성(id, name, email)
   2) 환율 테이블 통화 등록(currencyName, exchangeRate, symbol)
@@ -34,11 +38,15 @@
   6) 사용자 삭제(users/{userId})
   7) 특정 사용자 환전 요청 건수 조회(/exchanges/count?userId={userId})
 
+---
+
 ### 프로젝트 기여자
 1. 기획 : 김영웅
 2. 개발 : 김영웅, 박진상, 박성원
 3. 검토 : 황석규
 4. gitHub 관리 : 김영웅
+
+---
 
 ## ERD
 ![image](https://github.com/user-attachments/assets/07dc41b7-6dd3-4047-9e3b-fdd77ebd91aa)
